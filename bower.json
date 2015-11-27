@@ -1,0 +1,21 @@
+{
+  "name": "markdwon-editor",
+  "description": "",
+  "main": "main.js",
+  "authors": [
+    "psychoss <626377748@qq.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/psychoss/electron-markdown-editor",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "codemirror": "~5.9.0"
+  }
+}

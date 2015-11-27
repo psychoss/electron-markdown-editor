@@ -2,8 +2,10 @@
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
-  font-family: monospace;
   color: black;
+    font-family: "Ubuntu Mono",monospace;
+    font-size: 15px;
+
 }
 
 /* PADDING */

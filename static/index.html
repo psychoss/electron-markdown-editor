@@ -5,24 +5,66 @@
   <meta charset="utf-8">
   <title></title>
   <link rel="stylesheet" href="cm/codemirror.css">
+  <link rel="stylesheet" href="cm/foldgutter.css">
+
+
   <link rel="stylesheet" href="cm/material.css">
   <link rel="stylesheet" href="scss/index.css">
-   <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
 </head>
 
 <body>
   <div class="header">
     <div class="toolbar">
       <div class="toolbar-wrapper">
-        <a class="toolbar-button">
-          <i class="material-icons">undo</i>
+
+        <span class="toolbar-separator">
+        </span>
+        <a class="toolbar-button editor-save-btn" aria-label="Save">
+          <i class="material-icons">new</i>
         </a>
-        <a class="toolbar-button">
-          <i class="material-icons">redo</i>
+        <a class="toolbar-button editor-save-btn" aria-label="Save">
+          <i class="material-icons">save</i>
         </a>
         <span class="toolbar-separator">
-
         </span>
+        <a class="toolbar-button">
+          <i class="material-icons">format_bold</i>
+        </a>
+        <a class="toolbar-button">
+          <i class="material-icons">format_italic</i>
+        </a>
+        <a class="toolbar-button">
+          <i class="material-icons">code</i>
+        </a>
+        <span class="toolbar-separator">
+        </span>
+        <a class="toolbar-button">
+          <i class="material-icons">format_list_bulleted</i>
+        </a>
+        <a class="toolbar-button">
+          <i class="material-icons">&#xE242;</i>
+        </a>
+        <span class="toolbar-separator">
+        </span>
+        <a class="toolbar-button">
+          <i class="material-icons">remove</i>
+        </a>
+        <a class="toolbar-button">
+          <i class="material-icons">&#xE250;</i>
+        </a>
+        <a class="toolbar-button">
+            <i class="material-icons">&#xE251;</i>
+        </a>
+        <span class="toolbar-separator">
+        </span>
+        <a class="toolbar-button editor-undo-btn" aria-label="Undo">
+          <i class="material-icons">undo</i>
+        </a>
+        <a class="toolbar-button editor-redo-btn" aria-label="Redo">
+          <i class="material-icons">redo</i>
+        </a>
+
         <a class="toolbar-combo-button">
         </a>
       </div>
@@ -30,7 +72,7 @@
   </div>
   <main>
     <div class="container">
-      <div class="editor" >
+      <div class="editor">
 
       </div>
       <div class="editor-footer" style="height:300px">
@@ -40,10 +82,18 @@
   </main>
   <footer>
   </footer>
-
+  <menu type="context" class="editor-context-menu">
+    <menuitem class="cut" label="Cut"></menuitem>
+    <menuitem class="copy" label="Copy"></menuitem>
+    <menuitem class='paste' label="Paste"></menuitem>
+    <hr>
+  </menu>
   <script src="cm/codemirror.js" charset="utf-8"></script>
+  <script src="cm/foldcode.js" charset="utf-8"></script>
+  <script src="cm/foldgutter.js" charset="utf-8"></script>
   <script src="cm/markdown.js" charset="utf-8"></script>
-  <script src="../lib/editor.js" charset="utf-8"></script>
+  <script src="cm/markdown-fold.js" charset="utf-8"></script>
+  <script src="lib/editor.js" charset="utf-8"></script>
 </body>
 
 </html>

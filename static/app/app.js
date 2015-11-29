@@ -4,6 +4,9 @@ class Commands {
 	constructor(editor) {
 		this.editor = editor;
 	}
+	_indentString() {
+		return this.editor.session.getTabString();
+	}
     /**
 	 * ------------------------------------------------------------------------
 	 *  Bold
@@ -60,37 +63,34 @@ class Commands {
 		}
 		this.editor.session.replace(selection, str)
 	}
-	    /**
-		 * ------------------------------------------------------------------------
-		 * Indent Decrease
-		 * ------------------------------------------------------------------------
-		 */
-	indent(){
-		let selection = this.editor.getSelectionRange();
-		console.log(selection);
-		let lines = this.editor.session.getLines(selection.start.row, selection.end.row);
-		let str = '';
-		for (let l of lines) {
-			if (l.startsWidth('\t'))
-				str += l.substr(1)+ '\n';
-		}
-		this.editor.session.replace(selection, str);
-		}
+	/**
+	 * ------------------------------------------------------------------------
+	 * Sort lines
+	 * ------------------------------------------------------------------------
+	 */
+	sort() {
+
+	}
+		
+	/**
+	 * ------------------------------------------------------------------------
+	 * Indent Decrease
+	 * ------------------------------------------------------------------------
+	 */
+	indent() {
+		let range = this.editor.getSelectionRange().collapseRows();
+		this.editor.session.outdentRows(range);
+	}
 	/**
 	 * ------------------------------------------------------------------------
 	 * List bulleted
 	 * ------------------------------------------------------------------------
 	 */
 	bulleted() {
-		let selection = this.editor.getSelectionRange();
-		console.log(selection);
-		let lines = this.editor.session.getLines(selection.start.row, selection.end.row);
-		let str = '';
-		for (let l of lines) {
-			if (l.trim())
-				str += "* " + l .trim()+ '\n';
-		}
-		this.editor.session.replace(selection, str);
+		let range = this.editor.getSelectionRange().collapseRows();
+		let doc = this.editor.session.doc;
+		for (var row = range.start.row; row <= range.end.row; row++)
+			doc.insertInLine({ row: row, column: 0 }, "* ");
 	}
 	/**
 	 * ------------------------------------------------------------------------
@@ -98,17 +98,13 @@ class Commands {
 	 * ------------------------------------------------------------------------
 	 */
 	numeric() {
-		let selection = this.editor.getSelectionRange();
-		console.log(selection);
-		let lines = this.editor.session.getLines(selection.start.row, selection.end.row);
-		let str = '';
-		let i=1;
-		for (let l of lines) {
-			if (l.trim()){
-				str += i+". " + l .trim()+ '\n';
-				i++;}
+		let range = this.editor.getSelectionRange().collapseRows();
+		let doc = this.editor.session.doc;
+		var i = 1;
+		for (var row = range.start.row; row <= range.end.row; row++) {
+			doc.insertInLine({ row: row, column: 0 }, i + ". ");
+			i++;
 		}
-		this.editor.session.replace(selection, str);
 	}
 }
 
@@ -129,9 +125,10 @@ class BindElement {
 		this._bind('.editor-bold-btn', this.commands.bold.bind(this.commands));
 		this._bind('.editor-italic-btn', this.commands.italic.bind(this.commands));
 		this._bind('.editor-code-btn', this.commands.code.bind(this.commands));
+		this._bind('.editor-sort-btn', this.commands.sort.bind(this.commands));
+		this._bind('.editor-indent-btn', this.commands.indent.bind(this.commands));
 		this._bind('.editor-bulleted-btn', this.commands.bulleted.bind(this.commands));
 		this._bind('.editor-numeric-btn', this.commands.numeric.bind(this.commands));
-		this._bind('.editor-indent-btn', this.commands.indent.bind(this.commands));
 
 
 	}

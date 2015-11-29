@@ -1,0 +1,24 @@
+/**
+  * ------------------------------------------------------------------------
+  * Editor
+  * ------------------------------------------------------------------------
+  */
+
+.editor
+{
+    position: relative;
+
+    overflow: auto;
+
+   // -webkit-user-select: none;
+
+    flex-grow: 1;
+}
+.CodeMirror 
+{
+    min-height: 100%;
+}
+// .CodeMirror-scroll
+// {
+//     -webkit-user-select: none;
+// }

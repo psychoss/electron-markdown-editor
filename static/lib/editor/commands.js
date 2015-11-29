@@ -1,5 +1,5 @@
 'use strict';
-const db=require('../database')
+const db = require('../database')
 class Commands {
 
 
@@ -7,33 +7,78 @@ class Commands {
     this.editor = editor;
     this.initSave();
     this.initAllKey();
-    this.initFlatCode();
+    this.initCommands();
+    this.database = new db('/home/psycho/RESOURCE/归档/note/database/doc.db');
+  }
+  initDatabase() {
+    let this_ = this;
+    this.database = (params) => {
+    }
   }
   initSave() {
     var this_ = this;
     this.save = () => {
-      let text = this_.editor.getValue();
-    }
-  }
-  initAllKey(){
-    this.allkeys=()=>{
-      db.allkeys().then((array)=>{
-        console.log(array);
+      let content = this_.editor.getValue();
+      this_.database.upsert({
+        content: content
       });
     }
   }
-  initFlatCode(){
+  initAllKey() {
+    this.allkeys = () => {
+
+    }
+  }
+
+  initCommands() {
     var this_ = this;
-    this.flatCode=()=>{
-      let sel=  this_.editor.getSelection();
-      sel=sel.replace(/[\n\\"\\']/g,(str)=>{
-        if (str==='\n') {
+    this.flatCode = () => {
+      let sel = this_.editor.getSelection();
+      sel = sel.replace(/[\n\\"\\']/g, (str) => {
+        if (str === '\n') {
           return "\\n";
         }
-        return "\\"+str;
+        return "\\" + str;
       });
       this_.editor.replaceSelection(sel)
-    }
+    };
+    /**
+     * ------------------------------------------------------------------------
+     * Wrapper the selection width the blod mark.
+     * ------------------------------------------------------------------------
+     */
+    this.blod = () => {
+      let sel = this_.editor.getSelection();
+      sel = ' **' + sel.trim() + '** '
+      this_.editor.replaceSelection(sel);
+    };
+    /**
+     * ------------------------------------------------------------------------
+     * Wrapper the selection width the italic mark.
+     * ------------------------------------------------------------------------
+     */
+    this.italic = () => {
+      let sel = this_.editor.getSelection();
+      sel = ' *' + sel.trim() + '* '
+      this_.editor.replaceSelection(sel);
+    };
+    /**
+     * ------------------------------------------------------------------------
+     * Wrapper the selection width code or pre mark.
+     * ------------------------------------------------------------------------
+     */
+    this.code = () => {
+      let sel = this_.editor.getSelection();
+      if (!sel.trim()) {
+        sel = '```\n```\n';
+      } else if (/\n/.test(sel)) {
+
+        sel = "```\n" + sel + "\n```\n";
+      } else {
+        sel = ' `' + sel.trim() + '` ';
+      }
+      this_.editor.replaceSelection(sel);
+    };
   }
 
 }
